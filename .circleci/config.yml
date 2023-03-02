@@ -69,7 +69,7 @@ commands:
 jobs:
   build-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:14.18.0
     steps:
       - checkout
       - restore_cache:
@@ -91,7 +91,7 @@ jobs:
 
   build-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:14.18.0
     steps:
       - checkout
       - restore_cache:
@@ -112,7 +112,7 @@ jobs:
 
   test-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:14.18.0
     steps:
       - checkout
       - restore_cache:
@@ -129,7 +129,7 @@ jobs:
 
   test-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:14.18.0
     steps:
       - checkout
       - restore_cache:
@@ -146,7 +146,7 @@ jobs:
 
   scan-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:14.18.0
     steps:
       - checkout
       - restore_cache:
@@ -165,7 +165,7 @@ jobs:
 
   scan-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: circleci/node:14.18.0
     steps:
       - checkout
       - restore_cache:
@@ -225,32 +225,31 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   configure-infrastructure:
-      docker:
-        - image: python:3.7-alpine3.11
-      steps:
-        - checkout
-        - install_ansible
-        - add_ssh_keys:
-            fingerprints: ["9a:2a:5d:73:f1:d0:4f:d6:b2:76:ed:30:55:b0:b9:51"]
-        - attach_workspace:
-            at: ~/
-        - run:
-            name: Install dependencies
-            command: |
-              apk add --update ansible
-        - run:
-            name: Configure server
-            command: |
-              cd .circleci/ansible
-              cat inventory.txt
-              ansible-playbook -i inventory.txt configure-server.yml
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - install_ansible
+      - add_ssh_keys:
+          fingerprints: ["9a:2a:5d:73:f1:d0:4f:d6:b2:76:ed:30:55:b0:b9:51"]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            cat inventory.txt
+            ansible-playbook -i inventory.txt configure-server.yml
 
-        - destroy-environment:
-            workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment:
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   run-migrations:
-    docker: circleci/node:13.8.0
-
+    docker: circleci/node:14.18.0
     steps:
       - checkout
       - run:
