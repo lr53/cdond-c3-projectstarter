@@ -249,7 +249,8 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   run-migrations:
-    docker: circleci/node:14.18.0
+    docker:
+      - image: circleci/node:14.18.0
     steps:
       - checkout
       - run:
