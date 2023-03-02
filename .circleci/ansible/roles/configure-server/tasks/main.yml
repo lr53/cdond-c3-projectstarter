@@ -1,0 +1,18 @@
+---
+  - name: "install nodejs and npm"
+    become: yes
+    apt:
+      name: ["nodejs", "npm"]
+      state: latest
+      update_cache: yes
+
+  - name: "install nodejs 13.8.0"
+    become: yes
+    shell: n 13.8.0
+
+  - name: "install pm2"
+    become: yes
+    npm:
+      name: pm2
+      global: yes
+      state: present
