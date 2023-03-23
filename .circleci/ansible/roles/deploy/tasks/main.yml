@@ -1,0 +1,28 @@
+---
+
+- name: install node js
+  become: true
+  apt:
+    name: ['nodejs', 'npm']
+    state: latest
+    update_cache: true
+
+- name: install pm2
+  become: true
+  npm:
+    name: pm2
+    global: true
+    state: latest
+    production: true
+
+- name: extract artifact
+  become: true
+  unarchive:
+    src: files/artifact.tar.gz
+    dest: .
+
+- name: build and run pm2 server
+  become: true
+  shell: |
+    pm2 stop default
+    pm2 start npm -- start
