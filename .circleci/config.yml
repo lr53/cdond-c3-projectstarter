@@ -229,7 +229,8 @@ jobs:
       - checkout
       - install_awscli
       - add_ssh_keys:
-          fingerprints: ["f2:ba:ad:d0:49:4d:dd:78:80:af:8a:07:17:0e:b0:ec:2a:00:b6:c5"]
+          fingerprints:
+            - "9b:d0:16:8d:f7:72:2d:10:08:95:ff:e4:34:a5:8f:c0"
       - attach_workspace:
           at: ~/
       - run:
