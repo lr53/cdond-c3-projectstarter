@@ -361,11 +361,10 @@ jobs:
     steps:
       - checkout
       - install_awscli
-      - install_nodejs
       - run:
           name: Install dependencies
           command: |
-            # your code here
+            apk add --update --no-cache curl nodejs npm
       - run:
           name: Backend smoke test.
           command: |
