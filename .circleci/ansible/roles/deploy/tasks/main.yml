@@ -1,28 +1,23 @@
 ---
-
-- name: install node js
+- name: copy to remote
   become: true
-  apt:
-    name: ['nodejs', 'npm']
-    state: latest
-    update_cache: true
+  copy:
+        src: artifact.tar.gz
+        dest: /home/ubuntu
 
-- name: install pm2
-  become: true
-  npm:
-    name: pm2
-    global: true
-    state: latest
-    production: true
+- name: Creates directory
+  file:
+    path: /home/ubuntu/backend
+    state: directory
 
-- name: extract artifact
-  become: true
-  unarchive:
+- name: Extract 'artifact.tar.gz'
+  ansible.builtin.unarchive:
     src: artifact.tar.gz
-    dest: .
+    dest: /home/ubuntu/backend
 
-- name: build and run pm2 server
-  become: true
+- name: Start Application
   shell: |
-    pm2 stop default
-    pm2 start npm -- start
+    npm install
+    cd /home/ubuntu/backend
+    pm2 stop backend
+    pm2 start npm --name "backend" -- start
