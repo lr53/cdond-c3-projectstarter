@@ -22,7 +22,6 @@ Resources:
           ToPort: 3030
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
-          Type: PostgreSQL
           FromPort: 5432
           ToPort: 5432
           CidrIp: 0.0.0.0/0
