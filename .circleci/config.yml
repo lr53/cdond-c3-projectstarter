@@ -240,9 +240,9 @@ jobs:
       - run:
           name: Configure server
           command: |
-            echo ENVIRONMENT=production > backend/.env
+            echo ENVIRONMENT=development > backend/.env
             echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> backend/.env
-            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> backend/.env
+            echo TYPEORM_DATABASE=postgres >> backend/.env
             echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> backend/.env
             echo TYPEORM_HOST=$TYPEORM_HOST >> backend/.env
             echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> backend/.env
@@ -349,9 +349,9 @@ jobs:
             npm run build
             cd ..
             # Zip the directory
-            pwd
             tar -C backend -czvf artifact.tar.gz .
             cp artifact.tar.gz .circleci/ansible/roles/deploy/tasks
+            cat backend/.env
 
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
